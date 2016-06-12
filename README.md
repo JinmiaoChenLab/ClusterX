@@ -29,9 +29,9 @@ clusterPlot(r15_c)
 peakPlot(r15_c)
 ```
 
-![](R15_cluster_plot.pdf)
+![](R15_cluster_plot.png)
 
-![](R15_density_plot.pdf)
+![](R15_density_plot.png)
 
 
 ``` r
@@ -42,9 +42,9 @@ densityPlot(d31_c)
 peakPlot(d31_c)
 ```
 
-![](D31_cluster_plot.pdf)
+![](D31_cluster_plot.png)
 
-![](D31_density_plot.pdf)
+![](D31_density_plot.png)
 
 
 ### Reference
