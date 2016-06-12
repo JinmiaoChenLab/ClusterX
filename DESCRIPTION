@@ -24,5 +24,6 @@ Imports:
     doParallel,
     parallel,
     pdist,
+    ggplot2,
     RANN(>= 2.5)
 RoxygenNote: 5.0.1

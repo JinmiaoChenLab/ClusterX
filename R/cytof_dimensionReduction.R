@@ -22,7 +22,7 @@
 #' in_data <- iris[, 1:4]
 #' out_data <- cytof_dimReduction(in_data, method = "tsne")
 cytof_dimReduction <- function(data,
-                               method = c("tsne", "pca", "isomap"),
+                               method = c("tsne", "pca", "isomap", "NULL"),
                                out_dim = 2,
                                isomap_distMethod = "euclidean",
                                isomap_k = 5,
@@ -34,6 +34,9 @@ cytof_dimReduction <- function(data,
     rnames <- row.names(data)
 
     method <- match.arg(method)
+    if(method == "NULL"){
+        return(NULL)
+    }
     switch(method,
            tsne={
                cat("  Runing t-SNE...")
@@ -54,23 +57,23 @@ cytof_dimReduction <- function(data,
                    isomap_ndim <- ncol(data)
 
                ord <- tryCatch({
-                       dis <- vegdist(data, method = distMethod)
-                       isomap(dis, ndim = isomap_ndim, k = isomap_k, fragmentedOK = isomapFragmentOK)
-                   }, error=function(cond) {
-                       message("Runing isomap failed")
-                       message("Here's the original error message:")
-                       message(cond)
-                       return(NULL)
-                   })
+                   dis <- vegdist(data, method = isomap_distMethod)
+                   isomap(dis, ndim = isomap_ndim, k = isomap_k, fragmentedOK = isomapFragmentOK)
+               }, error=function(cond) {
+                   message("Runing isomap failed")
+                   message("Here's the original error message:")
+                   message(cond)
+                   return(NULL)
+               })
 
                if(is.null(ord)){
                    mapped <- NULL
                }else{
-                   mapped <- ord$points
-                   if(nrow(mapped) != nrow(data)){
+                   if(nrow(ord$points) != nrow(data)){
                        message("Run ISOMAP failed!")
                        return(NULL)
                    }
+                   mapped <- ord$points
                }
            })
 

@@ -133,17 +133,19 @@ ClusterX <- function(data,
 }
 
 
-
+#' @export
 clusterPlot <- function (x, ...) {
     UseMethod("clusterPlot", x)
 }
 
+#' @export
 clusterPlot.ClusterX <- function(x, ...) {
     if(is.null(x$plotData))
         stop("Data can's be visualized due to high dimensionality,
              Please try heatmapPlot to visualize the results! \n")
     if(ncol(x$plotData) == 2){
         df <- as.data.frame(x$plotData)
+        df$cluster <- as.factor(x$cluster)
         xvar <- colnames(df)[1]
         yvar <- colnames(df)[2]
         if(!(is.null(x$halo))){
@@ -154,49 +156,56 @@ clusterPlot.ClusterX <- function(x, ...) {
             p <- ggplot(df, aes_string(x=xvar, y=yvar)) +
                 geom_point(colour = coreCol, size = 1) +
                 geom_point(data = haloDf, alpha = 0.6, colour = haloCol) +
-                theme_bw()
+                theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         }else{
-            p <- ggplot(df, aes_string(x=xvar, y=yvar)) +
-                geom_point(colour = as.factor(x$cluster), size=1) +
-                theme_bw()
+            p <- ggplot(df, aes_string(x=xvar, y=yvar, colour = "cluster")) +
+                geom_point(size=1) + theme_bw() +
+                guides(colour = guide_legend(override.aes = list(size = 4))) +
+                theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
         }
     }
     p
 }
 
 
+#' @export
 densityPlot <- function (x, ...) {
     UseMethod("densityPlot", x)
 }
 
+#' @export
 densityPlot.ClusterX <- function(x, ...) {
     if(is.null(x$plotData))
         stop("Data can's be visualized due to high dimensionality,
              Please try heatmapPlot to visualize the cluster results! \n")
+
     if(ncol(x$plotData) == 2){
         df <- as.data.frame(x$plotData)
+        df$Density <- x$rho
         xvar <- colnames(df)[1]
         yvar <- colnames(df)[2]
         peakDf <- df[x$peakID, ]
-        p <- ggplot(df, aes_string(x=xvar, y=yvar)) +
-            geom_point(colour = x$rho) +
-            geom_point(data = peakDf, shape = 10, size = 2) +
+        p <- ggplot(df, aes_string(x=xvar, y=yvar, colour = "Density")) + geom_point() +
             scale_color_gradient2(low = "blue", high = "red", midpoint = median(x$rho)) +
-            theme_bw()
+            ggtitle("Density Plot") + geom_point(data = peakDf, shape = 10, size = 2, colour = "black") +
+            theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     }
     p
 }
 
+
+#' @export
 peakPlot <- function (x, ...) {
     UseMethod("peakPlot", x)
 }
 
+#' @export
 peakPlot.ClusterX <- function(x, ...) {
     df <- data.frame(rho = x$rho, delta = x$delta)
     peakDf <- df[x$peakID, ]
     p <- ggplot(df, aes(x=rho, y=delta)) + geom_point() +
         geom_point(data = peakDf, colour = "red") +
-        theme_bw()
+        theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())
     p
 }
 
