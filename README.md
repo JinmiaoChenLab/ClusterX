@@ -11,8 +11,9 @@ This package implement the clustering algorithm described by Alex Rodriguez and 
 To install the latest version from the github repository, use:
 
 ``` r
-if(!require(devtools)) 
-install.packages("devtools") # If not already installed
+if(!require(devtools)){
+  install.packages("devtools") # If not already installed
+}
 devtools::install_github("JinmiaoChenLab/ClusterX")
 ```
 
