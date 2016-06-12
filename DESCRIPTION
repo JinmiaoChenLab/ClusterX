@@ -1,0 +1,28 @@
+Package: ClusterX
+Type: Package
+Title: Fast clustering by automaticly search and find of density peaks
+Version: 0.99.1
+Author: Hao Chen
+Maintainer: Hao Chen <chen_hao@immunol.a-star.edu.sg>
+Description: This package implement the clustering algorithm described by
+    Alex Rodriguez and Alessandro Laio (2014) with improvements of automatic
+    peak detection and parallel computing.
+License: Artistic-2.0
+LazyData: TRUE
+Depends:
+    R (>= 2.10.0), plyr
+VignetteBuilder: knitr
+Suggests:
+    knitr,
+    RUnit,
+    testthat,
+    BiocGenerics
+Imports:
+    Rtsne,
+    vegan,
+    e1071,
+    doParallel,
+    parallel,
+    pdist,
+    RANN(>= 2.5)
+RoxygenNote: 5.0.1
