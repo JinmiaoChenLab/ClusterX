@@ -1,4 +1,4 @@
-Fast clustering by automatically search and find of density peaks
+Fast clustering by automatic search and find of density peaks
 ===============
 
 ### ClusterX

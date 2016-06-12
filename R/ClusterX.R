@@ -1,4 +1,4 @@
-#' Fast clustering by automatically search and find of density peaks
+#' Fast clustering by automatic search and find of density peaks
 #'
 #' This package implement the clustering algorithm described by Alex Rodriguez
 #' and Alessandro Laio (2014) with improvements of automatic peak detection and
