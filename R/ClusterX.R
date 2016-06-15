@@ -149,6 +149,7 @@ clusterPlot.ClusterX <- function(x, ...) {
         xvar <- colnames(df)[1]
         yvar <- colnames(df)[2]
         if(!(is.null(x$halo))){
+            halo <- x$halo
             df <- df[!halo, ]
             haloDf <- df[halo, ]
             coreCol <- as.factor(x$cluster)[!halo]
